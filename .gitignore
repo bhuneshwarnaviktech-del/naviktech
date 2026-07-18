@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Editor / IDE
+.idea/
+.vscode/
+.claude/
+
+# OS junk
+.DS_Store
+
+# Misc
+*.pdf
