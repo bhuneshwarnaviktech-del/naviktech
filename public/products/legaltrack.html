@@ -7,7 +7,7 @@
 <meta property="og:title" content="LegalTrack — Case management for Indian advocates" />
 <meta property="og:description" content="Cases, documents, hearings and payments in one workflow. Auto-syncs from eCourts. 14-day free trial." />
 <meta property="og:type" content="website" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Crect%20width=%22100%22%20height=%22100%22%20rx=%2222%22%20fill=%22%231D9E75%22/%3E%3Ctext%20x=%2250%22%20y=%2272%22%20font-family=%22Arial,Helvetica,sans-serif%22%20font-size=%2266%22%20font-weight=%22800%22%20text-anchor=%22middle%22%20fill=%22white%22%3EL%3C/text%3E%3C/svg%3E" />
 <title>LegalTrack — Case management for Indian advocates</title>
 <style>
   :root {
@@ -116,7 +116,7 @@
   /* ---------- Hero ---------- */
   .hero { padding: 78px 0 64px; position: relative; overflow: hidden; }
   .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
-  .hero h1 { font-size: clamp(34px, 5vw, 56px); font-weight: 800; margin: 20px 0 0; }
+  .hero h1 { font-size: clamp(29px, 4vw, 46px); font-weight: 800; margin: 18px 0 0; line-height: 1.12; }
   .hero h1 .accent { color: var(--emerald-deep); }
   .hero .sub { font-size: 18px; color: var(--muted); max-width: 34ch; margin-top: 20px; }
   .hero-cta { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
@@ -290,6 +290,51 @@
     .btn, .card-f { transition: none; }
   }
   :focus-visible { outline: 2px solid var(--emerald); outline-offset: 3px; border-radius: 6px; }
+
+  /* --- conversion pass additions --- */
+  .btn-xl { padding: 18px 36px; font-size: 17px; border-radius: 14px; }
+  .cta-secondary { display: inline-block; margin-top: 14px; font-size: 14.5px; font-weight: 600; color: var(--muted); }
+  .cta-secondary:hover { color: var(--emerald-deep); }
+
+  .props { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .props-in { display: flex; flex-wrap: wrap; gap: 12px 36px; justify-content: center; padding: 20px 0; }
+  .prop { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .prop .pc { width: 22px; height: 22px; border-radius: 50%; background: var(--emerald-tint); color: var(--emerald-deep); display: grid; place-items: center; font-size: 12px; font-weight: 800; flex: none; }
+
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
+  .step { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px 20px; }
+  .step .num { width: 34px; height: 34px; border-radius: 10px; background: var(--emerald); color: #fff; font-weight: 800; display: grid; place-items: center; margin-bottom: 14px; }
+  .step h4 { font-size: 15.5px; font-weight: 800; margin: 0 0 6px; }
+  .step p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.55; }
+  .step .arrow { position: absolute; right: -11px; top: 44px; color: var(--emerald); font-size: 20px; font-weight: 700; z-index: 2; }
+  @media (max-width: 820px){ .flow { grid-template-columns: 1fr 1fr; } .step .arrow { display: none; } }
+  @media (max-width: 480px){ .flow { grid-template-columns: 1fr; } }
+
+  .spot { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+  .spot + .spot { margin-top: 60px; }
+  .spot.rev .spot-media { order: 2; }
+  .spot h3 { font-size: clamp(22px, 2.8vw, 29px); font-weight: 800; }
+  .spot > div > p { color: var(--muted); font-size: 16px; margin-top: 14px; }
+  .spot ul { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-direction: column; gap: 10px; }
+  .spot li { display: flex; gap: 10px; font-size: 15px; color: var(--ink-soft); }
+  .spot li b { color: var(--emerald); font-weight: 800; }
+  @media (max-width: 820px){ .spot { grid-template-columns: 1fr; gap: 26px; } .spot.rev .spot-media { order: 0; } }
+
+  .mock { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; }
+  .mock-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid var(--line); font-weight: 800; font-size: 13.5px; }
+  .doc-row { display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-bottom: 1px solid var(--line); }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-ic { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; font-size: 17px; flex: none; }
+  .doc-t1 { font-size: 13.5px; font-weight: 700; }
+  .doc-t2 { font-size: 12px; color: var(--muted); }
+  .wa { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .wa-bubble { background: var(--emerald-tint); border: 1px solid #CDEEE1; border-radius: 14px 14px 14px 4px; padding: 13px 15px; max-width: 90%; font-size: 13px; line-height: 1.5; color: var(--ink); }
+  .wa-bubble .wa-h { font-weight: 800; color: var(--emerald-deep); margin-bottom: 4px; }
+  .wa-time { font-size: 11px; color: var(--muted); align-self: flex-end; }
+  .push { display: flex; gap: 12px; align-items: center; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-top: 4px; }
+  .final .cta-secondary { color: rgba(255,255,255,.82); }
+  .final .cta-secondary:hover { color: #fff; }
+  :root[data-theme="dark"] .wa-bubble { border-color: var(--line); }
 </style>
 </head>
 <body>
@@ -314,13 +359,13 @@
     <div class="wrap hero-grid">
       <div class="reveal in">
         <span class="eyebrow">Case management for Indian advocates</span>
-        <h1>Your cases, documents, hearings and payments —<br><span class="accent">in one workflow.</span></h1>
-        <p class="sub">LegalTrack pulls your case status straight from eCourts, then manages everything around it: files, hearing notes, reminders and client payments.</p>
+        <h1>Don't just track cases.<br><span class="accent">Manage documents, hearings, notes &amp; payments — in one app.</span></h1>
+        <p class="sub">eCourts shows you a status. LegalTrack helps you run the whole matter — it auto-syncs your case data from eCourts, then keeps your documents, hearing reminders, notes and payments in one place. Built for Indian advocates.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20start%20my%20LegalTrack%2014-day%20free%20trial." target="_blank" rel="noopener">Start 14-day free trial</a>
-          <a class="btn btn-ghost btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20book%20a%20LegalTrack%20demo." target="_blank" rel="noopener">Book a demo</a>
+          <a class="btn btn-primary btn-xl" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20start%20my%20LegalTrack%2014-day%20free%20trial." target="_blank" rel="noopener">Start 14-Day Free Trial</a>
         </div>
-        <p class="hero-note"><span class="dot"></span> <b>No card required.</b> Built for solo advocates and small firms.</p>
+        <a class="cta-secondary" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20book%20a%20LegalTrack%20demo." target="_blank" rel="noopener">or book a 15-min demo →</a>
+        <p class="hero-note"><span class="dot"></span> <b>No card required.</b> Built for solo advocates &amp; small firms across India.</p>
       </div>
 
       <div class="devicewrap reveal in">
@@ -370,13 +415,22 @@
     </div>
   </section>
 
+  <!-- VALUE PROPS -->
+  <div class="props">
+    <div class="wrap props-in reveal">
+      <span class="prop"><span class="pc">✓</span> Built for Indian advocates</span>
+      <span class="prop"><span class="pc">✓</span> More than case-status tools</span>
+      <span class="prop"><span class="pc">✓</span> Documents &amp; hearing reminders built in</span>
+    </div>
+  </div>
+
   <!-- PROBLEM / DIFFERENTIATION -->
   <section class="band" id="difference">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">The gap</span>
-        <h2>eCourts shows you the case. It doesn't manage it.</h2>
-        <p>Case-lookup tools tell you a status and a next date. They can't hold your files, your notes, your reminders or your fees. So the real work scatters across WhatsApp, paper files, and your memory.</p>
+        <span class="eyebrow">Why LegalTrack</span>
+        <h2>eCourts helps you <span class="accent">check status</span>.<br>LegalTrack helps you <span class="accent">run the matter</span>.</h2>
+        <p>Case-status tools tell you a status and a next date — and stop there. LegalTrack picks up where they leave off, holding your documents, notes, reminders and fees so the real work no longer scatters across WhatsApp, paper files and your memory.</p>
       </div>
       <div class="split">
         <div class="cmp old reveal">
@@ -398,6 +452,72 @@
             <li><span class="m">✓</span> Clients get a WhatsApp alert without you lifting a finger</li>
             <li><span class="m">✓</span> Dues and receipts tracked per matter</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>From new case to reminder, in four steps.</h2>
+        <p>Set a matter up once and LegalTrack keeps it moving — no spreadsheets, no missed dates.</p>
+      </div>
+      <div class="flow">
+        <div class="step reveal"><div class="num">1</div><h4>Add the case</h4><p>Enter a CNR — case details fill in automatically from eCourts.</p><span class="arrow">→</span></div>
+        <div class="step reveal"><div class="num">2</div><h4>Upload documents</h4><p>Attach files, photos or scans, organised under the case.</p><span class="arrow">→</span></div>
+        <div class="step reveal"><div class="num">3</div><h4>Add a note</h4><p>Type or dictate hearing notes so nothing gets forgotten.</p><span class="arrow">→</span></div>
+        <div class="step reveal"><div class="num">4</div><h4>Get reminded</h4><p>You and your client are alerted before the next hearing.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPOTLIGHTS: DOCUMENTS + REMINDERS -->
+  <section class="band">
+    <div class="wrap">
+      <div class="spot">
+        <div class="reveal">
+          <span class="eyebrow">Document management</span>
+          <h3>Every case file, one tap away.</h3>
+          <p>Stop digging through email, WhatsApp and paper folders. Keep every document for a matter in one place — upload from your phone, then open or share in seconds.</p>
+          <ul>
+            <li><b>✓</b> PDFs, Word files, photos &amp; scans</li>
+            <li><b>✓</b> Organised under the right case automatically</li>
+            <li><b>✓</b> Open or share straight from your phone</li>
+          </ul>
+        </div>
+        <div class="spot-media reveal">
+          <div class="mock" role="img" aria-label="Documents screen showing files attached to a case">
+            <div class="mock-head"><span>📁 Ramesh Kumar · Documents</span><span style="color:var(--muted);font-weight:600;font-size:12px">6 files</span></div>
+            <div class="doc-row"><span class="doc-ic" style="background:#FDECEC">📕</span><span style="flex:1"><span class="doc-t1">Bail-application.pdf</span><br><span class="doc-t2">Added 12 Jul · 240 KB</span></span><span class="tag tag-gold">PDF</span></div>
+            <div class="doc-row"><span class="doc-ic" style="background:#E8F0FE">📘</span><span style="flex:1"><span class="doc-t1">Vakalatnama.docx</span><br><span class="doc-t2">Added 10 Jul · 88 KB</span></span></div>
+            <div class="doc-row"><span class="doc-ic" style="background:var(--emerald-tint)">🖼️</span><span style="flex:1"><span class="doc-t1">FIR-scan.jpg</span><br><span class="doc-t2">Scanned 8 Jul · 1.2 MB</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spot rev">
+        <div class="reveal">
+          <span class="eyebrow">Hearing reminders</span>
+          <h3>Nobody misses the next date.</h3>
+          <p>LegalTrack reminds you before every hearing — and sends your client a WhatsApp alert one day before, so you field far fewer "when is my date?" calls.</p>
+          <ul>
+            <li><b>✓</b> Next dates auto-updated from eCourts</li>
+            <li><b>✓</b> Client alerts over WhatsApp, email &amp; push</li>
+            <li><b>✓</b> Sent automatically, one day before</li>
+          </ul>
+        </div>
+        <div class="spot-media reveal">
+          <div class="mock" role="img" aria-label="Hearing reminder sent to a client on WhatsApp">
+            <div class="mock-head"><span>🔔 Client reminder · one day before</span><span style="color:var(--emerald-deep);font-weight:700;font-size:12px">Sent</span></div>
+            <div class="wa">
+              <div class="wa-bubble"><div class="wa-h">LegalTrack Hearing Reminder</div>Dear Client, your hearing in <b>State of Bihar vs. Ramesh Kumar</b> is <b>tomorrow, 22 Jul 2026</b>. Please reach CJM, Patna on time.</div>
+              <span class="wa-time">Delivered on WhatsApp · 9:00 AM</span>
+              <div class="push"><span class="doc-ic" style="background:var(--emerald-tint)">🔔</span><span style="flex:1"><span class="doc-t1">⚖️ Hearing tomorrow</span><br><span class="doc-t2">Ramesh Kumar · 22 Jul · CJM, Patna</span></span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -464,9 +584,9 @@
   <!-- TRUST QUOTE -->
   <section class="band">
     <div class="wrap quote reveal">
-      <span class="eyebrow" style="justify-content:center">Made for the way you work</span>
-      <blockquote style="margin-top:20px">Many matters, multiple hearings, scattered documents and constant follow-ups. <span class="hl">LegalTrack keeps your workflow simple even as your caseload grows.</span></blockquote>
-      <p class="attr">Designed for India-first legal practice</p>
+      <span class="eyebrow" style="justify-content:center">Made for Indian advocates</span>
+      <blockquote style="margin-top:20px">Many matters, multiple hearings, scattered documents and constant follow-ups. <span class="hl">LegalTrack is built for the way Indian advocates actually work — and keeps it simple as your caseload grows.</span></blockquote>
+      <p class="attr">India-first · eCourts-connected · Made in India</p>
     </div>
   </section>
 
@@ -545,9 +665,9 @@
         <h2>Stop chasing your own cases.</h2>
         <p>Start your 14-day free trial and see how much time one organised workflow saves you.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20start%20my%20LegalTrack%2014-day%20free%20trial." target="_blank" rel="noopener">Start 14-day free trial</a>
-          <a class="btn btn-ghost btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20book%20a%20LegalTrack%20demo." target="_blank" rel="noopener">Book a demo</a>
+          <a class="btn btn-primary btn-xl" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20start%20my%20LegalTrack%2014-day%20free%20trial." target="_blank" rel="noopener">Start 14-Day Free Trial</a>
         </div>
+        <a class="cta-secondary" href="https://wa.me/917982681443?text=Hi%2C%20I%20want%20to%20book%20a%20LegalTrack%20demo." target="_blank" rel="noopener">or book a 15-min demo →</a>
       </div>
     </div>
   </section>
