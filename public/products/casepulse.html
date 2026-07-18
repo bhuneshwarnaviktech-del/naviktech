@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CasePulse — Practice management platform for Indian law firms</title>
+<meta name="description" content="CasePulse is a web platform that runs your entire legal practice — cases, daily cause lists, courtroom display board, client portal, drafting, calendar, time and billing — with case data synced automatically from eCourts." />
+<meta property="og:title" content="CasePulse — Run your entire practice on one pulse" />
+<meta property="og:description" content="The complete practice-management platform for Indian advocates and law firms. Cause lists, client portal, drafting, time & billing, reports — all in one place." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E" />
+<style>
+  :root {
+    --iris: #6366F1;
+    --iris-lt: #8B8DF7;
+    --iris-deep: #4F51D6;
+    --iris-tint: #EEEEFE;
+    --paper: #F6F7FB;
+    --paper-2: #EDEFF6;
+    --card: #FFFFFF;
+    --ink: #14161F;
+    --ink-soft: #363B4D;
+    --muted: #5B6273;
+    --line: #E3E5EF;
+    --ok: #12B981;
+    --amber: #E0972B;
+    --ground: #0C0E16;       /* dark hero ground (constant) */
+    --ground-2: #151827;
+    --ground-card: #1B1F30;
+    --ground-line: rgba(255,255,255,.10);
+    --ground-muted: #9BA1B4;
+    --shadow: 0 30px 60px -30px rgba(20,22,40,.35);
+
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: "SF Mono", ui-monospace, "Menlo", "Roboto Mono", "Courier New", monospace;
+    --maxw: 1160px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --iris: #8385F9; --iris-lt: #A5A7FF; --iris-deep: #6366F1; --iris-tint: #191B2C;
+      --paper: #0C0E16; --paper-2: #12141F; --card: #171A28;
+      --ink: #ECEEF6; --ink-soft: #C4C8D6; --muted: #8B92A6; --line: #262A3B;
+      --shadow: 0 30px 60px -30px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="light"] {
+    --iris:#6366F1;--iris-lt:#8B8DF7;--iris-deep:#4F51D6;--iris-tint:#EEEEFE;
+    --paper:#F6F7FB;--paper-2:#EDEFF6;--card:#FFFFFF;--ink:#14161F;--ink-soft:#363B4D;
+    --muted:#5B6273;--line:#E3E5EF;--shadow:0 30px 60px -30px rgba(20,22,40,.35);
+  }
+  :root[data-theme="dark"] {
+    --iris:#8385F9;--iris-lt:#A5A7FF;--iris-deep:#6366F1;--iris-tint:#191B2C;
+    --paper:#0C0E16;--paper-2:#12141F;--card:#171A28;--ink:#ECEEF6;--ink-soft:#C4C8D6;
+    --muted:#8B92A6;--line:#262A3B;--shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+  a { color:inherit; text-decoration:none; }
+  h1,h2,h3 { margin:0; line-height:1.1; letter-spacing:-0.025em; text-wrap:balance; }
+  p { margin:0; }
+  .mono { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+  .eyebrow { font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--iris); display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow::before { content:""; width:16px; height:1px; background:var(--iris); }
+
+  .btn { display:inline-flex; align-items:center; gap:8px; justify-content:center; font-weight:600; font-size:15px; border-radius:10px; padding:12px 20px; cursor:pointer; border:1px solid transparent; transition:transform .15s, background .15s, border-color .15s, color .15s; }
+  .btn-lg { padding:15px 26px; font-size:16px; border-radius:12px; }
+  .btn-primary { background:var(--iris); color:#fff; box-shadow:0 10px 24px -10px var(--iris); }
+  .btn-primary:hover { background:var(--iris-deep); transform:translateY(-1px); }
+  .btn-line { background:transparent; color:var(--ink); border-color:var(--line); }
+  .btn-line:hover { border-color:var(--iris); color:var(--iris); }
+
+  /* ---------- Nav ---------- */
+  header.nav { position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+  .nav-in { display:flex; align-items:center; justify-content:space-between; height:66px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; letter-spacing:-0.02em; }
+  .logo { width:30px; height:30px; border-radius:9px; display:grid; place-items:center; background:linear-gradient(140deg, var(--iris-lt), var(--iris-deep)); box-shadow:0 4px 12px -4px var(--iris); }
+  .logo svg { width:17px; height:17px; }
+  .nav-links { display:flex; align-items:center; gap:28px; }
+  .nav-links a.l { font-size:14.5px; font-weight:500; color:var(--muted); }
+  .nav-links a.l:hover { color:var(--ink); }
+  @media (max-width:800px){ .nav-links a.l { display:none; } }
+
+  /* ---------- Hero (constant dark ground) ---------- */
+  .hero { position:relative; background:var(--ground); color:#fff; overflow:hidden; border-bottom:1px solid var(--ground-line); }
+  #pulse { position:absolute; inset:0; width:100%; height:100%; display:block; opacity:.55; }
+  .hero-halo { position:absolute; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(99,102,241,.35), transparent 65%); filter:blur(30px); top:-160px; right:-120px; pointer-events:none; }
+  .hero-in { position:relative; z-index:2; display:grid; grid-template-columns:1.02fr 0.98fr; gap:52px; align-items:center; padding:76px 0 72px; }
+  .hero .eyebrow { color:var(--iris-lt); }
+  .hero .eyebrow::before { background:var(--iris-lt); }
+  .hero h1 { font-size:clamp(34px,5vw,55px); font-weight:700; margin-top:20px; color:#fff; }
+  .hero h1 .u { color:var(--iris-lt); position:relative; }
+  .hero .sub { font-size:18px; color:#B7BCCC; max-width:40ch; margin-top:20px; }
+  .hero-cta { display:flex; gap:14px; margin-top:30px; flex-wrap:wrap; }
+  .hero .btn-line { color:#fff; border-color:rgba(255,255,255,.22); }
+  .hero .btn-line:hover { border-color:#fff; color:#fff; }
+  .hero-note { margin-top:20px; font-size:13.5px; color:#9BA1B4; display:flex; align-items:center; gap:9px; }
+  .live-dot { width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 0 var(--ok); }
+  .pulsing { animation:pulse 1.8s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent);} 70%{box-shadow:0 0 0 9px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+  @media (max-width:900px){ .hero-in { grid-template-columns:1fr; gap:38px; padding:52px 0 48px; } }
+
+  /* ---------- Board mock ---------- */
+  .board { background:var(--ground-card); border:1px solid var(--ground-line); border-radius:18px; box-shadow:0 40px 80px -40px rgba(0,0,0,.7); overflow:hidden; }
+  .board-top { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--ground-line); }
+  .board-top .t { font-size:13px; font-weight:600; color:#fff; }
+  .board-top .d { font-family:var(--mono); font-size:11.5px; color:var(--ground-muted); }
+  .chip-live { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:600; color:#7EE7C7; background:rgba(18,185,129,.12); padding:5px 10px; border-radius:999px; }
+  .board-list { padding:6px 0; }
+  .brow { display:grid; grid-template-columns:34px 1fr auto; gap:12px; align-items:center; padding:11px 18px; border-bottom:1px solid rgba(255,255,255,.05); }
+  .brow:last-child { border-bottom:none; }
+  .bno { font-family:var(--mono); font-size:12px; color:var(--iris-lt); font-weight:600; }
+  .bp { font-size:13.5px; color:#EAECF4; font-weight:600; }
+  .bc { font-size:11.5px; color:var(--ground-muted); }
+  .btag { font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:6px; white-space:nowrap; }
+  .btag.now { background:rgba(99,102,241,.18); color:var(--iris-lt); }
+  .btag.soon { background:rgba(224,151,43,.16); color:#F0BE72; }
+  .btag.done { background:rgba(255,255,255,.06); color:var(--ground-muted); }
+
+  /* ---------- Sections ---------- */
+  section { padding:80px 0; }
+  .sec-head { max-width:660px; }
+  .sec-head h2 { font-size:clamp(27px,3.6vw,38px); font-weight:700; margin-top:16px; }
+  .sec-head p { color:var(--muted); font-size:17px; margin-top:16px; }
+  .band { background:var(--paper-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  /* stat strip */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .stat .n { font-size:30px; font-weight:700; letter-spacing:-0.02em; }
+  .stat .k { font-size:13px; color:var(--muted); margin-top:2px; }
+  @media (max-width:680px){ .stats { grid-template-columns:1fr 1fr; gap:24px 16px; } }
+
+  /* feature grid */
+  .feat { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:46px; }
+  .fcard { background:var(--card); border:1px solid var(--line); border-radius:15px; padding:24px; transition:transform .18s, box-shadow .18s, border-color .18s; }
+  .fcard:hover { transform:translateY(-3px); box-shadow:var(--shadow); border-color:color-mix(in srgb, var(--iris) 40%, var(--line)); }
+  .fic { width:42px; height:42px; border-radius:11px; background:var(--iris-tint); display:grid; place-items:center; margin-bottom:15px; color:var(--iris); }
+  .fic svg { width:21px; height:21px; }
+  .fcard h3 { font-size:16.5px; font-weight:700; }
+  .fcard p { color:var(--muted); font-size:14px; margin-top:7px; }
+  @media (max-width:900px){ .feat { grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .feat { grid-template-columns:1fr; } }
+
+  /* spotlight rows */
+  .spot { display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; }
+  .spot + .spot { margin-top:70px; }
+  .spot.rev .spot-media { order:2; }
+  .spot h3 { font-size:clamp(22px,2.6vw,28px); font-weight:700; }
+  .spot p { color:var(--muted); font-size:16px; margin-top:14px; }
+  .spot ul { list-style:none; padding:0; margin:20px 0 0; display:flex; flex-direction:column; gap:11px; }
+  .spot li { display:flex; gap:11px; font-size:15px; color:var(--ink-soft); }
+  .spot li b { color:var(--iris); font-weight:700; }
+  .spot-media { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:24px; box-shadow:var(--shadow); }
+  @media (max-width:820px){ .spot { grid-template-columns:1fr; gap:26px; } .spot.rev .spot-media { order:0; } }
+
+  /* portal mock */
+  .pm-head { display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:14px; }
+  .pm-dot { width:9px; height:9px; border-radius:50%; }
+  .pm-row { display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--line); }
+  .pm-row:last-child { border-bottom:none; }
+  .pm-k { font-size:13px; color:var(--muted); }
+  .pm-v { font-size:13.5px; font-weight:600; }
+  .pm-pill { font-size:11px; font-weight:700; padding:3px 9px; border-radius:6px; background:var(--iris-tint); color:var(--iris); }
+
+  /* sync mock */
+  .sync-line { display:flex; align-items:center; gap:12px; padding:12px 14px; border:1px solid var(--line); border-radius:11px; background:var(--paper); }
+  .sync-line + .sync-line { margin-top:10px; }
+  .sync-ic { width:30px; height:30px; border-radius:8px; background:var(--iris-tint); display:grid; place-items:center; color:var(--iris); flex:none; font-family:var(--mono); font-size:12px; font-weight:700; }
+  .sync-t1 { font-size:13.5px; font-weight:600; }
+  .sync-t2 { font-size:12px; color:var(--muted); }
+
+  /* faq */
+  .faq { max-width:800px; margin-top:36px; }
+  details { border-bottom:1px solid var(--line); }
+  summary { cursor:pointer; list-style:none; padding:18px 40px 18px 0; position:relative; font-weight:600; font-size:16.5px; }
+  summary::-webkit-details-marker { display:none; }
+  summary::after { content:"+"; position:absolute; right:4px; top:15px; font-size:22px; color:var(--iris); transition:transform .2s; }
+  details[open] summary::after { transform:rotate(45deg); }
+  details p { color:var(--muted); font-size:15px; padding:0 12px 18px 0; }
+
+  /* final */
+  .final { position:relative; overflow:hidden; background:linear-gradient(150deg, var(--ground), var(--ground-2)); border-radius:24px; padding:62px 48px; text-align:center; color:#fff; }
+  .final h2 { color:#fff; font-size:clamp(28px,4vw,42px); font-weight:700; }
+  .final p { color:#B7BCCC; font-size:17px; margin:16px auto 0; max-width:48ch; }
+  .final .hero-cta { justify-content:center; }
+  .final .btn-line { color:#fff; border-color:rgba(255,255,255,.25); }
+  .final .halo2 { position:absolute; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle, rgba(99,102,241,.4), transparent 65%); filter:blur(24px); bottom:-140px; left:-60px; }
+
+  footer { padding:52px 0 40px; border-top:1px solid var(--line); margin-top:80px; }
+  .foot-grid { display:flex; justify-content:space-between; gap:28px; flex-wrap:wrap; }
+  .foot-c { display:flex; flex-direction:column; gap:8px; font-size:14px; color:var(--muted); }
+  .foot-c a:hover { color:var(--iris); }
+  .foot-bottom { margin-top:32px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1;transform:none;transition:none;} .pulsing{animation:none;} .fcard,.btn{transition:none;} }
+  :focus-visible { outline:2px solid var(--iris); outline-offset:3px; border-radius:6px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M2 13h4l2.5-8 4 16 2.5-8H22" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      CasePulse
+    </a>
+    <nav class="nav-links">
+      <a class="l" href="#platform">Platform</a>
+      <a class="l" href="#cause-list">Cause list</a>
+      <a class="l" href="#portal">Client portal</a>
+      <a class="l" href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="https://wa.me/917982681443?text=Hi%2C%20I%27d%20like%20a%20CasePulse%20demo%20for%20my%20practice." target="_blank" rel="noopener">Book a demo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="pulse" aria-hidden="true"></canvas>
+    <div class="hero-halo"></div>
+    <div class="wrap hero-in">
+      <div class="reveal in">
+        <span class="eyebrow">Practice management for Indian law firms</span>
+        <h1>Run your entire practice<br>on one <span class="u">pulse</span>.</h1>
+        <p class="sub">CasePulse is the web platform that runs your whole chamber — cases, daily cause lists, client updates, drafting, time and billing — with court data synced automatically from eCourts.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%27d%20like%20a%20CasePulse%20demo%20for%20my%20practice." target="_blank" rel="noopener">Book a demo</a>
+          <a class="btn btn-line btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%27d%20like%20early%20access%20to%20CasePulse." target="_blank" rel="noopener">Request access</a>
+        </div>
+        <p class="hero-note"><span class="live-dot pulsing"></span> Built for advocates, chambers &amp; law firms across India.</p>
+      </div>
+
+      <div class="reveal in">
+        <div class="board" role="img" aria-label="Example of today's cause-list board with live matters">
+          <div class="board-top">
+            <div>
+              <div class="t">Today's board</div>
+              <div class="d">Fri, 18 Jul 2026 · 7 matters listed</div>
+            </div>
+            <span class="chip-live"><span class="live-dot pulsing"></span> Synced from eCourts</span>
+          </div>
+          <div class="board-list">
+            <div class="brow">
+              <span class="bno">12</span>
+              <span><span class="bp">Mehta &amp; Co. v. Union of India</span><br><span class="bc">Hon'ble Court No. 4 · Arguments</span></span>
+              <span class="btag now">On board</span>
+            </div>
+            <div class="brow">
+              <span class="bno">27</span>
+              <span><span class="bp">State v. R. Prasad</span><br><span class="bc">Sessions Court · Evidence</span></span>
+              <span class="btag soon">Item ~11:30</span>
+            </div>
+            <div class="brow">
+              <span class="bno">41</span>
+              <span><span class="bp">Sharma v. Sharma</span><br><span class="bc">Family Court · Mediation</span></span>
+              <span class="btag soon">After lunch</span>
+            </div>
+            <div class="brow">
+              <span class="bno">06</span>
+              <span><span class="bp">Kap Infra Pvt. Ltd. — Arbitration</span><br><span class="bc">Tribunal · Final hearing</span></span>
+              <span class="btag done">Adjourned</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS / POSITIONING -->
+  <section style="padding:44px 0;">
+    <div class="wrap stats reveal">
+      <div class="stat"><div class="n">1 place</div><div class="k">Your entire practice</div></div>
+      <div class="stat"><div class="n">Auto</div><div class="k">eCourts case &amp; cause-list sync</div></div>
+      <div class="stat"><div class="n">Web</div><div class="k">Works on any browser</div></div>
+      <div class="stat"><div class="n">Team</div><div class="k">Multiple users &amp; roles</div></div>
+    </div>
+  </section>
+
+  <!-- PLATFORM / FEATURE GRID -->
+  <section class="band" id="platform">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The platform</span>
+        <h2>Everything your chamber runs on.</h2>
+        <p>CasePulse replaces the scattered mix of diaries, spreadsheets, folders and WhatsApp with one connected system for the whole practice.</p>
+      </div>
+      <div class="feat">
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h11l5 5v11H4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 4v5h5M8 13h7M8 16h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Case management</h3>
+          <p>Every matter with its history, events, notes and documents — searchable and always up to date.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 5h18M3 10h18M3 15h12M3 20h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Daily cause list</h3>
+          <p>The day's cause list pulled and matched to your cases automatically — know what's listed before you reach court.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 21h8M12 18v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Display board</h3>
+          <p>A live board for your office or chamber showing today's listed matters and their status at a glance.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Hearing calendar</h3>
+          <p>Every hearing, deadline and task in one calendar, with reminders so nothing is missed.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Client portal</h3>
+          <p>Give each client a secure link to follow their case — cutting the endless "any update?" calls.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Drafting</h3>
+          <p>Draft notices, applications and documents from reusable templates, tied to the right matter.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Judgment search</h3>
+          <p>Search and save relevant judgments, and keep them attached to the cases they support.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Time &amp; billing</h3>
+          <p>Log billable hours per matter and track fees due and received, ready for invoicing.</p>
+        </div>
+        <div class="fcard reveal">
+          <div class="fic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <h3>Reports &amp; analytics</h3>
+          <p>See your caseload, outcomes and revenue at a glance, with reports you can act on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPOTLIGHT: CAUSE LIST -->
+  <section id="cause-list">
+    <div class="wrap">
+      <div class="spot">
+        <div class="reveal">
+          <span class="eyebrow">Never miss a listing</span>
+          <h3>Your cause list, decoded every morning.</h3>
+          <p>CasePulse fetches the daily cause list and matches listed matters to your cases automatically — so you walk into court already knowing your item numbers and what's coming up.</p>
+          <ul>
+            <li><b>—</b> Matters matched to your cases by CNR and party name</li>
+            <li><b>—</b> Item numbers and court halls surfaced for the day</li>
+            <li><b>—</b> A live display board for the office or chamber</li>
+            <li><b>—</b> Status auto-synced from eCourts through the day</li>
+          </ul>
+        </div>
+        <div class="spot-media reveal">
+          <div class="board" style="background:var(--paper); border-color:var(--line); box-shadow:none;">
+            <div class="board-top" style="border-color:var(--line);">
+              <div><div class="t" style="color:var(--ink)">Cause list · District Court</div><div class="d" style="color:var(--muted)">18 Jul 2026</div></div>
+              <span class="chip-live" style="color:var(--iris); background:var(--iris-tint);"><span class="live-dot" style="background:var(--iris)"></span> 5 of your cases</span>
+            </div>
+            <div class="board-list">
+              <div class="brow" style="border-color:var(--line);"><span class="bno">12</span><span><span class="bp" style="color:var(--ink)">Mehta &amp; Co. v. UOI</span><br><span class="bc" style="color:var(--muted)">Court 4 · Arguments</span></span><span class="btag now">Yours</span></div>
+              <div class="brow" style="border-color:var(--line);"><span class="bno">27</span><span><span class="bp" style="color:var(--ink)">State v. R. Prasad</span><br><span class="bc" style="color:var(--muted)">Sessions · Evidence</span></span><span class="btag now">Yours</span></div>
+              <div class="brow" style="border-color:var(--line);"><span class="bno">41</span><span><span class="bp" style="color:var(--ink)">Sharma v. Sharma</span><br><span class="bc" style="color:var(--muted)">Family · Mediation</span></span><span class="btag now">Yours</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPOTLIGHT: CLIENT PORTAL -->
+      <div class="spot rev" id="portal">
+        <div class="reveal">
+          <span class="eyebrow">Fewer status calls</span>
+          <h3>A portal that keeps clients in the loop.</h3>
+          <p>Share a secure link and let clients see their own case status, next dates and updates — no logins to manage, no more repeating yourself over the phone.</p>
+          <ul>
+            <li><b>—</b> Secure per-client link, no account setup for them</li>
+            <li><b>—</b> Case status, next hearing and updates in plain language</li>
+            <li><b>—</b> Automatic alerts over WhatsApp, email and push</li>
+            <li><b>—</b> You control exactly what each client can see</li>
+          </ul>
+        </div>
+        <div class="spot-media reveal">
+          <div class="pm-head">
+            <span class="pm-dot" style="background:var(--iris)"></span>
+            <div><div style="font-size:14px;font-weight:700">Client portal</div><div style="font-size:12px;color:var(--muted)">Shared with Mr. A. Mehta</div></div>
+          </div>
+          <div class="pm-row"><span class="pm-k">Case</span><span class="pm-v mono">CRL.A. 482 / 2025</span></div>
+          <div class="pm-row"><span class="pm-k">Status</span><span class="pm-pill">In progress</span></div>
+          <div class="pm-row"><span class="pm-k">Next hearing</span><span class="pm-v mono">22 Jul 2026</span></div>
+          <div class="pm-row"><span class="pm-k">Last update</span><span class="pm-v">Arguments part-heard</span></div>
+          <div class="pm-row"><span class="pm-k">Fee status</span><span class="pm-v" style="color:var(--ok)">Up to date</span></div>
+        </div>
+      </div>
+
+      <!-- SPOTLIGHT: ECOURTS SYNC -->
+      <div class="spot" id="sync">
+        <div class="reveal">
+          <span class="eyebrow">Always current</span>
+          <h3>Case data that updates itself.</h3>
+          <p>CasePulse connects to eCourts and keeps your matters current in the background — case status, next dates and orders flow in without anyone re-typing a thing.</p>
+          <ul>
+            <li><b>—</b> Add a case by CNR; details fill in automatically</li>
+            <li><b>—</b> Next hearing dates refreshed as courts update them</li>
+            <li><b>—</b> Orders and history pulled in and kept on file</li>
+            <li><b>—</b> Documents stored securely in the cloud</li>
+          </ul>
+        </div>
+        <div class="spot-media reveal">
+          <div class="sync-line"><span class="sync-ic">CNR</span><span style="flex:1"><span class="sync-t1">DLCT01-004821-2025</span><br><span class="sync-t2">Fetched from eCourts · details auto-filled</span></span><span class="btag now" style="background:var(--iris-tint);color:var(--iris)">Synced</span></div>
+          <div class="sync-line"><span class="sync-ic">📅</span><span style="flex:1"><span class="sync-t1">Next hearing → 22 Jul 2026</span><br><span class="sync-t2">Updated automatically this morning</span></span></div>
+          <div class="sync-line"><span class="sync-ic">📄</span><span style="flex:1"><span class="sync-t1">Interim order added</span><br><span class="sync-t2">Pulled from court record &amp; stored</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM / TRUST -->
+  <section class="band">
+    <div class="wrap sec-head reveal" style="max-width:720px;">
+      <span class="eyebrow">Built for teams</span>
+      <h2>One workspace for the whole firm.</h2>
+      <p>Bring your partners, associates and clerks into a single workspace with roles and permissions. Everyone works from the same live picture of every matter — whether it's a solo practice or a chamber of twenty.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">Questions</span><h2>Good to know</h2></div>
+      <div class="faq reveal">
+        <details open>
+          <summary>Who is CasePulse for?</summary>
+          <p>Indian advocates, chambers and law firms who want to run the whole practice — cases, cause lists, clients, drafting, time and billing — from one web platform instead of scattered tools.</p>
+        </details>
+        <details>
+          <summary>How is CasePulse different from a case-lookup app?</summary>
+          <p>Lookup tools just show a status. CasePulse pulls that data in automatically and adds everything around it: cause lists, a display board, a client portal, drafting, calendar, documents, time tracking, billing and reports.</p>
+        </details>
+        <details>
+          <summary>Do I have to enter case data by hand?</summary>
+          <p>No. Add a case by its CNR and CasePulse fetches the details from eCourts, then keeps status and next dates current in the background.</p>
+        </details>
+        <details>
+          <summary>Can my whole team use it?</summary>
+          <p>Yes. CasePulse is built around a shared workspace with multiple users, roles and permissions, so your associates and staff work from the same live data.</p>
+        </details>
+        <details>
+          <summary>Does it work on mobile?</summary>
+          <p>CasePulse runs in any modern browser, so it works on your laptop and phone. For a lighter, phone-first case tracker, our sibling product LegalTrack may suit solo advocates.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section>
+    <div class="wrap">
+      <div class="final reveal">
+        <div class="halo2"></div>
+        <span class="eyebrow" style="color:var(--iris-lt); justify-content:center;">Get started</span>
+        <h2 style="margin-top:14px;">See CasePulse on your own cases.</h2>
+        <p>Book a walkthrough and we'll set it up around how your practice actually works.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%27d%20like%20a%20CasePulse%20demo%20for%20my%20practice." target="_blank" rel="noopener">Book a demo</a>
+          <a class="btn btn-line btn-lg" href="https://wa.me/917982681443?text=Hi%2C%20I%27d%20like%20early%20access%20to%20CasePulse." target="_blank" rel="noopener">Request access</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top"><span class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M2 13h4l2.5-8 4 16 2.5-8H22" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> CasePulse</a>
+        <p style="color:var(--muted);font-size:14px;margin-top:12px;max-width:34ch">The practice-management platform for Indian law firms. A NavikTech product.</p>
+      </div>
+      <div class="foot-c">
+        <strong style="color:var(--ink)">Talk to us</strong>
+        <a href="mailto:mail.naviktech@gmail.com">mail.naviktech@gmail.com</a>
+        <a href="https://wa.me/917982681443" target="_blank" rel="noopener">WhatsApp us</a>
+        <span>Mon–Sat, 10:00 AM – 7:00 PM IST</span>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 CasePulse · NavikTech Solutions Pvt. Ltd.</span>
+      <span>Case data sourced from public eCourts services.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveals
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold:0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  // hero pulse line — scrolling ECG waveform
+  (function(){
+    var c = document.getElementById('pulse'); if(!c) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ctx = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio||1, 2), offset = 0;
+    function size(){ c.width = Math.max(1,c.clientWidth)*dpr; c.height = Math.max(1,c.clientHeight)*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+    function g(x,mu,s){ var d = x-mu; return Math.exp(-(d*d)/(2*s*s)); }
+    function wave(f){ // f in [0,1): one heartbeat period
+      return 0.12*g(f,0.34,0.020)   // P
+           - 0.16*g(f,0.47,0.008)   // Q
+           + 1.00*g(f,0.50,0.006)   // R
+           - 0.34*g(f,0.53,0.010)   // S
+           + 0.26*g(f,0.66,0.022);  // T
+    }
+    var PERIOD = 230, AMP = 42;
+    function line(){
+      var w = c.clientWidth, h = c.clientHeight, mid = h*0.52;
+      ctx.clearRect(0,0,w,h);
+      var grad = ctx.createLinearGradient(0,0,w,0);
+      grad.addColorStop(0,'rgba(99,102,241,0)');
+      grad.addColorStop(0.5,'rgba(139,141,247,0.95)');
+      grad.addColorStop(1,'rgba(99,102,241,0)');
+      ctx.lineWidth = 2; ctx.strokeStyle = grad;
+      ctx.shadowColor = 'rgba(120,124,247,0.85)'; ctx.shadowBlur = 12;
+      ctx.beginPath();
+      for (var px=0; px<=w; px+=2){
+        var phase = (px + offset) / PERIOD;
+        var f = phase - Math.floor(phase);
+        ctx.lineTo(px, mid - wave(f)*AMP);
+      }
+      ctx.stroke(); ctx.shadowBlur = 0;
+    }
+    function tick(){ offset += 1.1; line(); requestAnimationFrame(tick); }
+    size(); window.addEventListener('resize', function(){ size(); if(reduce) line(); });
+    if (reduce) line(); else tick();
+  })();
+</script>
+</body>
+</html>
