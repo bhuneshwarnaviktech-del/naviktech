@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 const navLinks = [
   { href: '#services', label: 'Services' },
+  { href: '#products', label: 'Products' },
   { href: '#about',    label: 'About' },
   { href: '#portfolio', label: 'Clients' },
   { href: '#contact',  label: 'Contact' },
